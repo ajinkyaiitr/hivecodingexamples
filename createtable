@@ -65,3 +65,37 @@ describe database ajinkyaiimr8809
 ----To see metadata of a table
 describe formatted table_name
 
+########Checking the contents in data warehouse
+hadoop fs -ls /apps/hive/warehouse/$USER.db/nyse/*
+
+-----Creating an external table
+
+CREATE EXTERNAL TABLE nyse_external(
+    exchange1 STRING,
+    symbol1 STRING,
+    ymd STRING,
+    price_open FLOAT,
+    price_high FLOAT,
+    price_low FLOAT,
+    price_close FLOAT,
+    volume INT,
+    price_adj_close FLOAT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION '/user/${env:USER}/NYSE_daily';
+
+
+Use your database by using the below command. ${env:USER} gets replaced by your username automatically:
+
+use ${env:USER};
+To save the data in the local file system
+
+insert overwrite local directory '/home/${env:USER}/onlycmc'
+select * from nyse where symbol1 = 'CMC';
+To view this data type in the following commands (Run in the web console)
+
+ tail onlycmc/000000_0
+To save data in HDFS (Run in Hive)
+
+insert overwrite directory 'onlycmc' select * from nyse where
+symbol1 = 'CMC';
