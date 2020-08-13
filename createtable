@@ -58,3 +58,10 @@ CREATE EXTERNAL TABLE tweets_raw_ajinkya8809 (
 ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
 WITH SERDEPROPERTIES ("ignore.malformed.json" = "true")
 LOCATION '/user/${env:USER}/SentimentFiles/SentimentFiles/upload/data/tweets_raw';
+
+----To see the metadata of the database
+describe database ajinkyaiimr8809
+
+----To see metadata of a table
+describe formatted table_name
+
