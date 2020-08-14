@@ -99,3 +99,6 @@ To save data in HDFS (Run in Hive)
 
 insert overwrite directory 'onlycmc' select * from nyse where
 symbol1 = 'CMC';
+
+***Adding ccolumns in a table
+ALTER TABLE x1 add columns(b int,c float)
