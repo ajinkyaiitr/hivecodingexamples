@@ -1,0 +1,27 @@
+***Copy the files to local
+hadoop fs -cp /data/bdhs/employees /user/$USER
+
+
+***Creating a partition table 
+CREATE TABLE employees(
+    name STRING,
+    department STRING,
+    somedate DATE
+)
+PARTITIONED BY(year STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+Load dataset 2012
+
+load data inpath 'hdfs:///user/${env:USER}/employees/2012.csv' into table
+employees partition (year=2012);
+
+Load dataset 2015
+
+load data inpath 'hdfs:///user/${env:USER}/employees/2015.csv' into table
+employees partition (year=2015);
+
+***View the partitions
+
+SHOW PARTITIONS EMPLOYEES;
+
