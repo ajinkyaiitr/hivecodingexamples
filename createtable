@@ -16,7 +16,7 @@ load data inpath 'hdfs:///user/ajinkyaiimr8809/NYSE_daily' overwrite into table 
 load data local inpath 'NYSE_daily' overwrite into table nyse;
 
 
-
+***Adding serde JAR in hive***
 
 ADD JAR hdfs:///data/hive/json-serde-1.1.9.9-Hive13-jar-with-dependencies.jar;
 SET hive.support.sql11.reserved.keywords=false;
@@ -102,3 +102,24 @@ symbol1 = 'CMC';
 
 ***Adding ccolumns in a table
 ALTER TABLE x1 add columns(b int,c float)
+
+***Creating Views
+CREATE view employee_engineering as SELECT * from employees where department == "Engineering";
+
+***Loading JSON data
+
+
+***Checking last few lines of the json file
+hadoop fs -tail /user/$USER/sample_json/user_country.json
+
+***Loading data from JSON file
+CREATE EXTERNAL TABLE user_countries(
+    name string,
+    country string
+)
+ROW FORMAT SERDE 'org.apache.hive.hcatalog.data.JsonSerDe'
+LOCATION 'hdfs:///user/${env:USER}/sample_json';
+
+
+
+
